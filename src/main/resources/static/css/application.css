@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+}
+
+.card-text {
+    flex-grow: 1;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.btn-custom-red {
+    background-color: #b31414; /* rosso spento */
+    color: white;
+    border: none;
+}
+
+.btn-custom-red:hover {
+    background-color: #b33f3f;
+    color: white;
+}
+
+.btn-custom-edit {
+    background-color: #e9a949 ;
+}
+
+.btn-custom-edit:hover {
+    background-color: #dab072;
+}
+
+.btn-custom-delete {
+    background-color:#ee4e49 ;
+}
+
+.btn-custom-delete:hover {
+    background-color: #eb6b67 ;
+}
+
+.pizza-btn {
+    max-width: 103px;
+    width: 100%;
+    height: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+     row-gap: 10px;  /* gap verticale azzerato */
+    column-gap: 25px;
+}
