@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dettagli Pizza</title>
+    <div th:replace="fragments/header :: head"></div>
+    <link rel="stylesheet" href="/src/main/resources/static/css/application.css">
+</head>
+<body class="container mt-5">
+    <h2>Offerte speciali per <span th:text="${pizza.nome}">Nome Pizza</span></h2>
+
+    <div th:if="${pizza.offerte != null and pizza.offerte.size() > 0}">
+        <ul class="list-group mb-4">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                th:each="offerta : ${pizza.offerte}">
+                <div>
+                    <strong th:text="${offerta.titolo}">Titolo Offerta</strong><br />
+                    <small>
+                        Dal <span th:text="${offerta.dataInizio}">dataInizio</span>
+                        al <span th:text="${offerta.dataFine}">dataFine</span>
+                    </small>
+                </div>
+                <a class="btn btn-sm btn-custom-edit"
+                th:href="@{/offerte/modifica/{id}(id=${offerta.id})}">Modifica</a>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${pizza.offerte == null or pizza.offerte.isEmpty()}">
+        <p>Nessuna offerta speciale disponibile.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a th:href="@{/offerte/nuova/{pizzaId}(pizzaId=${pizza.id})}" class="btn btn-custom-red mt-3">Crea nuova offerta</a>
+        <a th:href="@{/pizze}" class="btn btn-secondary mt-3">Torna alla lista pizze</a>
+    </div>
+    <div th:replace="fragments/header :: bootstrapScript"></div>
+</body>
+</html>

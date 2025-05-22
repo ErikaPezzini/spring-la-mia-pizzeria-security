@@ -50,11 +50,19 @@ public class Pizza {
     private Boolean disponibile;
 
     @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OffertaSpeciale> offertaSpeciale = new ArrayList<>();
+    private List<OffertaSpeciale> offerte = new ArrayList<>();
 
 
     public Integer getId() {
         return id;
+    }
+
+    public List<OffertaSpeciale> getOfferte() {
+        return offerte;
+    }
+
+    public void setOfferte(List<OffertaSpeciale> offerte) {
+        this.offerte = offerte;
     }
 
     public void setId(Integer id) {

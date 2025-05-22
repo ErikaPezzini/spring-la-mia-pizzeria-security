@@ -1,0 +1,9 @@
+package com.example.spring_la_mia_pizzeria_crud.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.spring_la_mia_pizzeria_crud.model.OffertaSpeciale;
+
+public interface OffertaSpecialeRepository extends JpaRepository<OffertaSpeciale, Integer> {
+
+}

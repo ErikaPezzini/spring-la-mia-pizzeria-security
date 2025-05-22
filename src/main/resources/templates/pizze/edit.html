@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Modifica Pizza</title>
     <div th:replace="fragments/header :: head"></div>
+    <link rel="stylesheet" href="/src/main/resources/static/css/application.css">
 </head>
 <body class="container py-4">
     <h1>Modifica Pizza</h1>
@@ -42,5 +43,6 @@
         <button type="submit" class="btn btn-primary">Salva</button>
         <a th:href="@{/pizze}" class="btn btn-secondary">Annulla</a>
     </form>
+    <div th:replace="fragments/header :: bootstrapScript"></div>
 </body>
 </html>

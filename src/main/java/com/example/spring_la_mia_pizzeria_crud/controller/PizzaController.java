@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.spring_la_mia_pizzeria_crud.model.Pizza;
 import com.example.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
@@ -68,5 +69,18 @@ public class PizzaController {
     public String delete(@PathVariable Integer id) {
     pizzaRepository.deleteById(id);
     return "redirect:/pizze";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable Integer id, Model model) {
+        Pizza pizza = pizzaRepository.findById(id).orElseThrow();
+        model.addAttribute("pizza", pizza);
+        return "pizze/dettagli";
+    }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String test() {
+        return "Controller attivo";
     }
 }

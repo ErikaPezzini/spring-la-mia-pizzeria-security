@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuova Offerta</title>
+    <div th:replace="fragments/header :: head"></div>
+    <link rel="stylesheet" href="/src/main/resources/static/css/application.css">
+</head>
+<body class="container mt-5">
+
+    <h1>Nuova Offerta Speciale</h1>
+
+    <form th:action="@{/offerte/store}" th:object="${offerta}" method="post">
+        <input type="hidden" th:field="*{pizza.id}" />
+
+        <div class="mb-3">
+            <label for="titolo" class="form-label">Titolo</label>
+            <input type="text" th:field="*{titolo}" class="form-control" placeholder="Titolo offerta">
+            <div class="text-danger" th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="dataInizio" class="form-label">Data Inizio</label>
+            <input type="date" th:field="*{dataInizio}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="dataFine" class="form-label">Data Fine</label>
+            <input type="date" th:field="*{dataFine}" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success">Salva Offerta</button>
+        <a th:href="@{/pizze/{id}(id=${offerta.pizza.id})}" class="btn btn-secondary">Annulla</a>
+    </form>
+    <div th:replace="fragments/header :: bootstrapScript"></div>
+</body>
+</html>
