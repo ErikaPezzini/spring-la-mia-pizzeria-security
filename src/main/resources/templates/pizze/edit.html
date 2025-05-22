@@ -40,7 +40,20 @@
             <label for="disponibile" class="form-check-label">Disponibile</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Salva</button>
+        <!-- Sezione Ingredienti -->
+        <div class="mb-3">
+            <label class="form-label">Ingredienti</label>
+            <div th:each="ingrediente : ${ingredientiDisponibili}">
+                <input type="checkbox" 
+                       th:name="ingredientiSelezionati" 
+                       th:id="${'ingrediente-' + ingrediente.id}" 
+                       th:value="${ingrediente.id}" 
+                       th:checked="${pizza.ingredienti.contains(ingrediente)}" />
+                <label th:for="${'ingrediente-' + ingrediente.id}" th:text="${ingrediente.nome}"></label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Salva</button>
         <a th:href="@{/pizze}" class="btn btn-secondary">Annulla</a>
     </form>
     <div th:replace="fragments/header :: bootstrapScript"></div>

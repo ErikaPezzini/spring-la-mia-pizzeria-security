@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ingredienti</title>
+    <div th:replace="fragments/header :: head"></div>
+    <link rel="stylesheet" href="/src/main/resources/static/css/application.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Ingredienti</h1>
+        <a th:href="@{/ingredienti/create}" class="btn btn-custom-red mb-3">Nuovo ingrediente</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ingrediente : ${ingredienti}">
+                    <td th:text="${ingrediente.nome}">Nome ingrediente</td>
+                    <td>
+                        <a th:href="@{'/ingredienti/delete/' + ${ingrediente.id}}" 
+                           class="btn btn-custom-delete" 
+                           onclick="return confirm('Sei sicuro di voler cancellare questo ingrediente?');">Elimina</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragments/header :: bootstrapScript"></div>
+</body>
+</html>

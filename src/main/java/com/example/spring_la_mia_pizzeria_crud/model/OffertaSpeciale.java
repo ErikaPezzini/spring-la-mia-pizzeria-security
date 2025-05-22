@@ -34,7 +34,6 @@ public class OffertaSpeciale {
     @JoinColumn(name = "pizza_id", nullable = false)
     private Pizza pizza;
 
-    // Getters e Setters
     public Integer getId() {
         return id;
     }

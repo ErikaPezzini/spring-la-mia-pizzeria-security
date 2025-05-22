@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuovo Ingrediente</title>
+    <div th:replace="fragments/header :: head"></div>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Crea nuovo ingrediente</h1>
+        <form th:action="@{/ingredienti/create}" th:object="${ingrediente}" method="post">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome ingrediente</label>
+                <input type="text" th:field="*{nome}" id="nome" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-danger">Salva</button>
+            <a th:href="@{/ingredienti}" class="btn btn-custom-secondary ms-2">Annulla</a>
+        </form>
+    </div>
+    <div th:replace="fragments/header :: bootstrapScript"></div>
+</body>
+</html>

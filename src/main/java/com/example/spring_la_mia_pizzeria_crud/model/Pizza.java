@@ -2,15 +2,21 @@ package com.example.spring_la_mia_pizzeria_crud.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
@@ -52,9 +58,25 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OffertaSpeciale> offerte = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "pizza_ingrediente",
+        joinColumns = @JoinColumn(name = "pizza_id"),
+        inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
+    )
+    private Set<Ingrediente> ingredienti = new HashSet<>();
+
 
     public Integer getId() {
         return id;
+    }
+
+    public Set<Ingrediente> getIngredienti() {
+        return ingredienti;
+    }
+
+    public void setIngredienti(Set<Ingrediente> ingredienti) {
+        this.ingredienti = ingredienti;
     }
 
     public List<OffertaSpeciale> getOfferte() {

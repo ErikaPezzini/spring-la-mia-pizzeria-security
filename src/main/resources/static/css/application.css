@@ -22,7 +22,7 @@
 }
 
 .btn-custom-red {
-    background-color: #b31414; /* rosso spento */
+    background-color: #b31414;
     color: white;
     border: none;
 }
@@ -60,6 +60,6 @@
 }
 
 .button-container {
-     row-gap: 10px;  /* gap verticale azzerato */
+     row-gap: 10px; 
     column-gap: 25px;
 }
