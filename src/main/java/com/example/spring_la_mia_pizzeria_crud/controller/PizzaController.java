@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;  // <--- IMPORTANTE
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,13 +37,23 @@ public class PizzaController {
     private IngredienteRepository ingredienteRepository;
 
     @GetMapping
-    public String index(Model model){
+    public String index(Model model, Authentication authentication){
         List<Pizza> result = pizzaRepository.findAll();
         model.addAttribute("list", result);
+
+        boolean isAdmin = false;
+        if (authentication != null) {
+            isAdmin = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .anyMatch(role -> role.equals("ROLE_ADMIN"));
+        }
+        model.addAttribute("isAdmin", isAdmin);
+
         return "/pizze/index";
     }
 
     @GetMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public String creaPizzaForm(Model model) {
         model.addAttribute("pizza", new Pizza());
         List<Ingrediente> tuttiIngredienti = ingredienteRepository.findAll();  
@@ -49,8 +62,9 @@ public class PizzaController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public String creaPizzaSubmit(@Valid @ModelAttribute Pizza pizza, BindingResult bindingResult,
-    @RequestParam(required=false) List<Integer> ingredientiSelezionati, Model model) {
+        @RequestParam(required=false) List<Integer> ingredientiSelezionati, Model model) {
         if(bindingResult.hasErrors()) {
             List<Ingrediente> tuttiIngredienti = ingredienteRepository.findAll();
             model.addAttribute("ingredientiDisponibili", tuttiIngredienti);
@@ -68,6 +82,7 @@ public class PizzaController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editPizzaForm(@PathVariable Integer id, Model model) {
         Pizza pizza = pizzaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Pizza non trovata: " + id));
@@ -80,8 +95,9 @@ public class PizzaController {
     }
 
     @PostMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updatePizza(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult,
-    @RequestParam(required = false) List<Integer> ingredientiSelezionati, Model model) {
+        @RequestParam(required = false) List<Integer> ingredientiSelezionati, Model model) {
         if (bindingResult.hasErrors()) {
             List<Ingrediente> tuttiIngredienti = ingredienteRepository.findAll();
             model.addAttribute("ingredientiDisponibili", tuttiIngredienti);
@@ -100,7 +116,8 @@ public class PizzaController {
         return "redirect:/pizze";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable Integer id) {
         pizzaRepository.deleteById(id);
         return "redirect:/pizze";
