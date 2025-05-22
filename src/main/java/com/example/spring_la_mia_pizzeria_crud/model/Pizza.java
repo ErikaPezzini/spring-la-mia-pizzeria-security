@@ -1,13 +1,17 @@
 package com.example.spring_la_mia_pizzeria_crud.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -44,6 +48,10 @@ public class Pizza {
     @NotNull(message = "Disponibilità richiesta")
     @Column(nullable=false)
     private Boolean disponibile;
+
+    @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OffertaSpeciale> offertaSpeciale = new ArrayList<>();
+
 
     public Integer getId() {
         return id;
